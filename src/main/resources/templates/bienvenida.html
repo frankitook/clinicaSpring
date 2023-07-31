@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Bienvenida</title>
+  <!-- Agregar los enlaces a los archivos CSS de Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Agregar el enlace al archivo CSS personalizado -->
+  <link rel="stylesheet" href="estiloInicio.css">
+</head>
+<body>
+  <!-- Usar el contenedor de Bootstrap para centrar el contenido -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 mt-5">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h2 class="text-center">Bienvenida</h2>
+          </div>
+          <div class="card-body">
+            <p th:text="${mensaje}" class="text-center"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Agregar el enlace al archivo de script de Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
