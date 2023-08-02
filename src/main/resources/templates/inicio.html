@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <!-- Enlace a styles.css -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
     <div class="container mt-5">
-        <h2 class="mb-3">Ingreso</h2>
+        <h2 class="mb-3 text-center">Ingreso</h2>
         <form action="/home/ingresar" method="POST" class="needs-validation" novalidate>
             <div class="form-group">
                 <label for="correo">Correo electrónico:</label>
@@ -29,17 +29,13 @@
                 <label for="contrasena">Contraseña:</label>
                 <div class="input-group"> <!-- Agrega la clase input-group -->
                     <input type="password" id="contrasena" name="contrasena" class="form-control" required>
-                    <div class="input-group-append"> <!-- Agrega la clase input-group-append -->
-                        <span class="input-group-text">
-                            <input type="checkbox" id="mostrarContrasena"> <!-- Agrega el checkbox -->
-                            Mostrar
-                        </span>
-                    </div>
+                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">🙉</button>
                 </div>
                 <div class="invalid-feedback">
                     Por favor, ingresa una contraseña.
                 </div>
             </div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
             <div class="d-flex justify-content-center"> <!-- Agrega la clase d-flex y justify-content-center -->
                 <button type="submit" class="btn btn-primary">Ingresar</button>
@@ -61,8 +57,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script src="funciones.js"></script>
+    <script src="/funciones.js"></script>
 </body>
 
 </html>
-

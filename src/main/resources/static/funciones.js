@@ -1,14 +1,12 @@
-// funciones.js
-document.addEventListener('DOMContentLoaded', function () {
-    var mostrarContrasenaCheckbox = document.getElementById('mostrarContrasena');
-    var contrasenaInput = document.getElementById('contrasena');
+document.addEventListener("DOMContentLoaded", function () {
+    const passwordField = document.getElementById("contrasena");
+    const togglePasswordButton = document.getElementById("togglePassword");
+    let isPasswordVisible = false;
 
-    mostrarContrasenaCheckbox.addEventListener('change', function () {
-        if (this.checked) {
-            contrasenaInput.setAttribute('type', 'text');
-        } else {
-            contrasenaInput.setAttribute('type', 'password');
-        }
+    togglePasswordButton.addEventListener("click", function () {
+        isPasswordVisible = !isPasswordVisible;
+        passwordField.type = isPasswordVisible ? "text" : "password";
+        togglePasswordButton.textContent = isPasswordVisible ? "🙈" : "🙉";
     });
 });
 

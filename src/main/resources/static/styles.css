@@ -16,3 +16,12 @@ body {
     color: #dc3545;
     font-size: 14px;
 }
+
+/* Estilos para el botón del ojo para mostrar/ocultar la contraseña */
+.btn-toggle-password {
+    border: none;
+    outline: none; /* Evita el borde activo (marcado) al hacer clic */
+    cursor: pointer;
+}
+
+
