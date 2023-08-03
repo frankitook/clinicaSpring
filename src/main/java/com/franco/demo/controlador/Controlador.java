@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.franco.demo.dominio.Usuario;
+import com.franco.demo.interfazservicios.IUsuarioService;
 import com.franco.demo.repositorio.UsuarioRepository;
 
 
@@ -23,8 +24,8 @@ import com.franco.demo.repositorio.UsuarioRepository;
 @RequestMapping("/home")
 public class Controlador {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+     @Autowired
+    private IUsuarioService service;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -33,7 +34,7 @@ public class Controlador {
     @GetMapping("/saludo")
     public String saludar(){
        
-    return "inicio";
+    return "index";
     }
 
     @GetMapping("/registro")
@@ -45,14 +46,14 @@ public class Controlador {
     @PostMapping("/ingresar")
     public String ingresar(@RequestParam("correo") String correo, @RequestParam("contrasena") String contrasena, Model model) {
         // Buscar el usuario en la base de datos por correo
-        Usuario usuario = usuarioRepository.findByEmail(correo);
+        Usuario usuario = service.buscarPorEmail(correo);
     
         if (usuario != null && passwordEncoder.matches(contrasena, usuario.getContrasena())) {
             model.addAttribute("mensaje", "Hola " + correo + ", has iniciado sesión correctamente.");
             return "bienvenida";
         } else {
             model.addAttribute("error", "Usuario o contraseña inválida. Inténtalo de nuevo.");
-            return "inicio";
+            return "index";
         }
     }
     
@@ -65,7 +66,7 @@ public class Controlador {
         Usuario nuevoUsuario = new Usuario(Integer.parseInt(id) ,correo, passwordEncoder.encode(contrasena));
 
         // Guardar el nuevo usuario en la base de datos
-        usuarioRepository.save(nuevoUsuario);
+        service.guardar(nuevoUsuario);
 
         return "redirect:/home/saludo";
     }
