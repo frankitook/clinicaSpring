@@ -11,7 +11,6 @@ import javax.persistence.Table;
 public class Usuario {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private String email;

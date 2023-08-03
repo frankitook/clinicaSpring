@@ -17,6 +17,8 @@ import com.franco.demo.repositorio.UsuarioRepository;
 
 
 
+
+
 @Controller
 @RequestMapping("/home")
 public class Controlador {
@@ -56,11 +58,11 @@ public class Controlador {
     
 
     @PostMapping("/registrar")
-    public String procesarRegistro(@RequestParam("correo") String correo, @RequestParam("contrasena") String contrasena,
+    public String procesarRegistro(@RequestParam("id") String id,@RequestParam("correo") String correo, @RequestParam("contrasena") String contrasena,
             Model model) {
 
         
-        Usuario nuevoUsuario = new Usuario(1,correo, passwordEncoder.encode(contrasena));
+        Usuario nuevoUsuario = new Usuario(Integer.parseInt(id) ,correo, passwordEncoder.encode(contrasena));
 
         // Guardar el nuevo usuario en la base de datos
         usuarioRepository.save(nuevoUsuario);
