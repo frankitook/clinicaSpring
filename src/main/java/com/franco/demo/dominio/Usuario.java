@@ -6,32 +6,78 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "clientes")
 public class Usuario {
     
     @Id
-    private int id;
-
+    private int dni;
+    private String nombre;
+    private String apellido;
     private String email;
     private String contrasena;
+    private String tipo;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String email, String contrasena) {
-        this.id = id;
-        this.email = email;
-        this.contrasena = contrasena;
-    }
+  
 
     // Getters y Setters
 
+    public Usuario(int dni, String nombre, String apellido, String email, String contrasena, String tipo) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.contrasena = contrasena;
+        this.tipo = tipo;
+    }
+
+
+    
+
+    public String getNombre() {
+        return nombre;
+    }
+
+
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+
+
+    public String getApellido() {
+        return apellido;
+    }
+
+
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+
+
+    public String getTipo() {
+        return tipo;
+    }
+
+
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+
+
     public int getId() {
-        return id;
+        return dni;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.dni = id;
     }
 
     public String getEmail() {

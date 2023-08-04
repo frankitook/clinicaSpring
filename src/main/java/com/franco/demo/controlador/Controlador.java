@@ -59,11 +59,16 @@ public class Controlador {
     
 
     @PostMapping("/registrar")
-    public String procesarRegistro(@RequestParam("id") String id,@RequestParam("correo") String correo, @RequestParam("contrasena") String contrasena,
-            Model model) {
+    public String procesarRegistro(@RequestParam("dni") String dni,
+                                   @RequestParam("nombre") String nombre, 
+                                   @RequestParam("apellido") String apellido, 
+                                   @RequestParam("correo") String correo, 
+                                   @RequestParam("contrasena") String contrasena, 
+                                   @RequestParam("tipo") String tipo,
+                                   Model model) {
 
         
-        Usuario nuevoUsuario = new Usuario(Integer.parseInt(id) ,correo, passwordEncoder.encode(contrasena));
+        Usuario nuevoUsuario = new Usuario(Integer.parseInt(dni),convertirPrimeraLetraMayuscula(nombre),convertirPrimeraLetraMayuscula(apellido),correo, passwordEncoder.encode(contrasena),tipo);
 
         // Guardar el nuevo usuario en la base de datos
         service.guardar(nuevoUsuario);
@@ -78,6 +83,21 @@ public class Controlador {
 
     }
 
+    public String convertirPrimeraLetraMayuscula(String palabra) {
+        if (palabra == null || palabra.isEmpty()) {
+            return palabra;
+        }
+    
+        // Obtener la primera letra y convertirla a mayúscula
+        String primeraLetra = palabra.substring(0, 1).toUpperCase();
+    
+        // Obtener el resto de la cadena y convertirla a minúsculas
+        String restoPalabra = palabra.substring(1).toLowerCase();
+    
+        // Concatenar la primera letra mayúscula con el resto de la cadena en minúsculas
+        return primeraLetra + restoPalabra;
+    }
+    
 
     
 

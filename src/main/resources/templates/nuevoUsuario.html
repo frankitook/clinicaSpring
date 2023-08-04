@@ -39,8 +39,8 @@
 						Registrarse
 					</span>
 					
-                    <div class="wrap-input100 validate-input" data-validate = "Ingresa un email">
-						<input class="input100" type="text" id="correo" name="correo" required>
+                    <div class="wrap-input100 validate-input" data-validate = "Ingresa dni">
+						<input class="input100" type="text" id="dni" name="dni" required>
 						<span class="focus-input100"></span>
 						<span class="label-input100">Dni</span>
 					</div>
@@ -48,13 +48,13 @@
                     
 					
                     <div class="wrap-input100 validate-input" data-validate = "Ingresa un email">
-						<input class="input100" type="text" id="correo" name="correo" required>
+						<input class="input100" type="text" id="nombre" name="nombre" required>
 						<span class="focus-input100"></span>
 						<span class="label-input100">Nombre</span>
 					</div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Ingresa un email">
-						<input class="input100" type="text" id="correo" name="correo" required>
+						<input class="input100" type="text" id="apellido" name="apellido" required>
 						<span class="focus-input100"></span>
 						<span class="label-input100">Apellido</span>
 					</div>
@@ -72,21 +72,21 @@
 						<span class="label-input100">Contraseña</span>
 					</div>
 
-                    <div>
-                        <label for="f-option" class="l-radio">
-                          <input type="radio" id="f-option" name="selector" tabindex="1">
-                          <span>First</span>
-                        </label>
-                        <label for="s-option" class="l-radio">
-                          <input type="radio" id="s-option" name="selector" tabindex="2">
-                          <span>Second</span>
-                        </label>
-                          <label for="t-option" class="l-radio">
-                          <input type="radio" id="t-option" name="selector" tabindex="3">
-                          <span>Third</span>
-                        </label>
-                      </div>
-
+					<div>
+						<label for="medico-option" class="l-radio">
+							<input type="radio" id="medico-option" name="tipo" value="Medico" checked tabindex="1">
+							<span>Médico</span>
+						</label>
+						<label for="secretario-option" class="l-radio">
+							<input type="radio" id="secretario-option" name="tipo" value="Secretario" tabindex="2">
+							<span>Secretario</span>
+						</label>
+						<label for="paciente-option" class="l-radio">
+							<input type="radio" id="paciente-option" name="tipo" value="Paciente" tabindex="3">
+							<span>Paciente</span>
+						</label>
+					</div>
+					
 					
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
