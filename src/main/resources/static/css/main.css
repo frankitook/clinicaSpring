@@ -297,7 +297,7 @@ iframe {
   flex-wrap: wrap;
   align-items: flex-end;
   width: 100%;
-  height: 80px;
+  height: 70px;
   position: relative;
   border: 1px solid #e6e6e6;
   border-radius: 10px;
@@ -469,7 +469,7 @@ input.input100 {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 30px; /* Agrega esta línea para establecer el margen superior */
+  margin-top: 60px; /* Agrega esta línea para establecer el margen superior */
 }
 
 .login100-form-btn {

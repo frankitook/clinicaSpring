@@ -1,58 +1,144 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
-    <title>Nuevo Usuario</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Enlace a Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <!-- Enlace a styles.css -->
-    <link rel="stylesheet" href="/styles.css">
+	<title>Turnos Medicos</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/principal.css">
+<!--===============================================================================================-->
 </head>
+<body style="background-color: #666666;">
+	
+	<div class="limiter">
+		<div class="container-login100">
+			
+			<div class="wrap-login100">
+				<form action="/home/registrar" method="POST" class="login-form validate-form" novalidate>
+					<span class="login100-form-title p-b-43">
+						Registrarse
+					</span>
+					
+                    <div class="wrap-input100 validate-input" data-validate = "Ingresa un email">
+						<input class="input100" type="text" id="correo" name="correo" required>
+						<span class="focus-input100"></span>
+						<span class="label-input100">Dni</span>
+					</div>
 
-<body>
-    <div class="container mt-5">
-        <h2 class="mb-3">Registro de Nuevo Usuario</h2>
-        <form action="/home/registrar" method="POST" class="needs-validation" novalidate>
-            <!-- Campos del formulario -->
-            <div class="form-group">
-                <label for="id">Id:</label>
-                <input type="number" id="id" name="id" class="form-control" required>
-                <div class="invalid-feedback">
-                    Por favor, ingresa una contraseña.
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="correo">Correo electrónico:</label>
-                <input type="email" id="correo" name="correo" class="form-control" required>
-                <div class="invalid-feedback">
-                    Por favor, ingresa un correo válido.
-                </div>
-            </div>
-        
-            <div class="form-group">
-                <label for="contrasena">Contraseña:</label>
-                <input type="password" id="contrasena" name="contrasena" class="form-control" required>
-                <div class="invalid-feedback">
-                    Por favor, ingresa una contraseña.
-                </div>
-            </div>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <button type="submit" class="btn btn-primary">Registrar</button>
-        </form>
+                    
+					
+                    <div class="wrap-input100 validate-input" data-validate = "Ingresa un email">
+						<input class="input100" type="text" id="correo" name="correo" required>
+						<span class="focus-input100"></span>
+						<span class="label-input100">Nombre</span>
+					</div>
 
-        <!-- Mostrar el mensaje de éxito si existe -->
-        <div th:if="${exito}" class="mt-3">
-            <p>Registro exitoso. Bienvenido/a, <span th:text="${nombre}"></span>.</p>
-        </div>
-    </div>
+                    <div class="wrap-input100 validate-input" data-validate = "Ingresa un email">
+						<input class="input100" type="text" id="correo" name="correo" required>
+						<span class="focus-input100"></span>
+						<span class="label-input100">Apellido</span>
+					</div>
 
-    <!-- Script para habilitar la validación de formularios en Bootstrap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+					<div class="wrap-input100 validate-input" data-validate = "Ingresa un email">
+						<input class="input100" type="text" id="correo" name="correo" required>
+						<span class="focus-input100"></span>
+						<span class="label-input100">Email</span>
+					</div>
+					
+					
+					<div class="wrap-input100 validate-input" data-validate="La contraseña es requerida">
+						<input class="input100" type="password" id="contrasena" name="contrasena" required>
+						<span class="focus-input100"></span>
+						<span class="label-input100">Contraseña</span>
+					</div>
+
+                    <div>
+                        <label for="f-option" class="l-radio">
+                          <input type="radio" id="f-option" name="selector" tabindex="1">
+                          <span>First</span>
+                        </label>
+                        <label for="s-option" class="l-radio">
+                          <input type="radio" id="s-option" name="selector" tabindex="2">
+                          <span>Second</span>
+                        </label>
+                          <label for="t-option" class="l-radio">
+                          <input type="radio" id="t-option" name="selector" tabindex="3">
+                          <span>Third</span>
+                        </label>
+                      </div>
+
+					
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+					 <!-- Mostrar el mensaje de error si existe -->
+					 <div th:if="${error}" class="error-message mt-3">
+						<p th:text="${error}"></p>
+					</div>
+
+					<div class="container-register-form-btn">
+						<button type="submit" class="register-form-btn">
+							Registrarme
+						</button>
+
+						
+					</div>
+				
+				</form>
+
+				
+
+				<div class="login100-more">
+					<video autoplay loop muted preload="auto">
+					  <source src="/v5.mp4" type="video/mp4">
+					  
+					</video>
+				  </div>
+				  
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	
+	
+<!--===============================================================================================-->
+	<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/bootstrap/js/popper.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/daterangepicker/moment.min.js"></script>
+	<script src="/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="/js/main.js"></script>
+
 </body>
-
 </html>
