@@ -209,6 +209,7 @@ iframe {
   justify-content: center;
   align-items: center;
   background: #f2f2f2;
+ 
 }
 
 
@@ -224,7 +225,6 @@ iframe {
   flex-wrap: wrap;
   align-items: stretch;
   flex-direction: row-reverse;
-
 }
 
 /*==================================================================
@@ -236,6 +236,7 @@ iframe {
   background-position: center;
   position: relative;
   z-index: 1;
+  
 }
 
 .login100-more::before {
@@ -260,7 +261,7 @@ iframe {
   min-height: 100vh;
   display: block;
   background-color: #f7f7f7;
-  padding: 173px 55px 55px 55px;
+  padding: 140px 55px 55px 55px;
 
 
 }
@@ -461,7 +462,7 @@ input.input100 {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 40px; /* Agrega esta línea para establecer el margen superior */
+  margin-top: 30px; /* Agrega esta línea para establecer el margen superior */
 }
 
 .login100-form-btn {
@@ -554,7 +555,7 @@ input.input100 {
   .login100-form {
     padding-left: 15px;
     padding-right: 15px;
-    padding-top: 70px;
+    padding-top: 50px;
   }
 }
 

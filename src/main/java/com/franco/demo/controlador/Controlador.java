@@ -71,6 +71,12 @@ public class Controlador {
         return "redirect:/home/saludo";
     }
 
+    @GetMapping("/cerrar")
+    public String cerrarSesion(){
+
+        return "redirect:/home/saludo";
+
+    }
 
 
     
