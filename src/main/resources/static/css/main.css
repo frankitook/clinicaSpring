@@ -528,7 +528,7 @@ input.input100 {
 }
 
 .error-message {
-  color: #ff0000; /* Color rojo para el texto del mensaje de error */
+  color: red; /* Color rojo para el texto del mensaje de error */
   font-size: 14px;
   text-align: center;
 }
