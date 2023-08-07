@@ -3,6 +3,8 @@ package com.franco.demo.controlador;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.franco.demo.dominio.Turno;
 import com.franco.demo.dominio.Usuario;
+import com.franco.demo.interfazservicios.ITurnoService;
 import com.franco.demo.interfazservicios.IUsuarioService;
 
 
@@ -26,6 +30,9 @@ public class Controlador {
 
      @Autowired
     private IUsuarioService service;
+
+     @Autowired
+     private ITurnoService servicio;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -53,6 +60,9 @@ public class Controlador {
             if(usuario.getTipo().equals("Paciente")){
             return "paciente";
             }else{
+
+                List<Turno> turnos = servicio.traeTurnos();
+                model.addAttribute("turnos", turnos);
 
                 return "medico";
             }

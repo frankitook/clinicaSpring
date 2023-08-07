@@ -1,0 +1,56 @@
+/* Estilo para la tabla */
+#turnosTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  text-align: center; /* Centrar el contenido de toda la tabla */
+}
+
+/* Estilo para las celdas de encabezado (th) */
+#turnosTable th {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+/* Estilo para las celdas de datos (td) */
+#turnosTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+/* Estilo para alternar el color de las filas */
+#turnosTable tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Estilo para los botones */
+#turnosTable button {
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-right: 5px;
+  border-radius: 5px; /* Bordes redondeados */
+  transition: transform 0.2s; /* Transición de transformación */
+}
+
+/* Estilo para el botón "Finalizar" */
+#turnosTable button.finalizar {
+  background-color: #4CAF50;
+}
+
+/* Estilo para el botón "Cancelar" */
+#turnosTable button.cancelar {
+  background-color: #f44336;
+}
+
+/* Estilo para la columna "Acciones" */
+#turnosTable td.acciones {
+  text-align: center;
+}
+
+/* Efecto hover para los botones */
+#turnosTable button:hover {
+  transform: scale(1.05); /* Agrandar el botón en un 10% */
+}

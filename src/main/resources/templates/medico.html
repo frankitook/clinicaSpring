@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="/assets/css/owl.css">
     <link rel="stylesheet" href="/assets/css/lightbox.css">
 
+    <link rel="stylesheet" href="/estiloTabla.css">
+
   </head>
 
 <body>
@@ -42,6 +44,35 @@
     </nav>
   </header>
   
+
+  <h1>Turnos</h1>
+    <table id="turnosTable">
+        <thead>
+            <tr>
+                <th>ID Turno</th>
+                <th>Nombre Paciente</th>
+                <th>Nombre Médico</th>
+                <th>Fecha de Atención</th>
+                <th>Hora de Atención</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="turno : ${turnos}">
+                <td th:text="${turno.idTurno}"></td>
+                <td th:text="${turno.paciente.nombre} + ' ' + ${turno.paciente.apellido}"></td>
+                <td th:text="${turno.medico.nombre} + ' ' + ${turno.medico.apellido}"></td>
+                <td th:text="${turno.fechaAtencion}"></td>
+                <td th:text="${turno.horaAtencion}"></td>
+                <td th:text="${turno.estado}"></td>
+                <td>
+                  <button class="finalizar" th:text="Finalizar" onclick=""></button>
+                  <button class="cancelar" th:text="Cancelar" onclick=""></button>
+              </td>
+            </tr>
+        </tbody>
+    </table>
 
 
     <script src="/vendorr/jquery/jquery.min.js"></script>

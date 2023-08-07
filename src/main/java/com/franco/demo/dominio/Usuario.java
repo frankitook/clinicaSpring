@@ -5,7 +5,6 @@ package com.franco.demo.dominio;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
 import javax.persistence.Table;
 
 @Entity
@@ -22,8 +21,15 @@ public class Usuario {
     private String tipo;
 
 
+    
 
     // Getters y Setters
+
+    public Usuario() {
+    }
+
+
+
 
     public Usuario(int dni, String nombre, String apellido, String email, String contrasena, String tipo) {
         this.dni = dni;

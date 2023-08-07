@@ -13,6 +13,7 @@ public class UsuarioService implements IUsuarioService{
 
     @Autowired
     private UsuarioRepository dao;
+    
 
     @Override
     public Usuario buscarPorEmailYCorreo(String correo, String contrasena) {
@@ -34,5 +35,6 @@ public class UsuarioService implements IUsuarioService{
     public void guardar(Usuario u) {
         dao.save(u);
     }
+    
     
 }

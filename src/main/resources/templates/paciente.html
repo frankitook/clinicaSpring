@@ -42,22 +42,7 @@
     </nav>
   </header>
 
-  <h1>Tabla PacienteMedico</h1>
-    <table >
-        <tr>
-            <th>Nombre del Paciente</th>
-            <th>Nombre del Médico</th>
-            <th>DNI del Paciente</th>
-        </tr>
-        <!-- Suponiendo que tienes una lista de objetos PacienteMedico llamada "pacienteMedicoList" en el modelo -->
-        <!-- Puedes usar la sintaxis de Thymeleaf para iterar sobre los registros -->
-        <!-- En cada iteración, accederías a los atributos del paciente y del médico para mostrar la información -->
-        <tr th:each="pacienteMedico : ${pacienteMedicoList}">
-            <td th:text="${pacienteMedico.paciente.nombre} + ' ' + ${pacienteMedico.paciente.apellido}"></td>
-            <td th:text="${pacienteMedico.medico.nombre} + ' ' + ${pacienteMedico.medico.apellido}"></td>
-            <td th:text="${pacienteMedico.paciente.dni}"></td>
-        </tr>
-    </table>
+  
   
 
 
