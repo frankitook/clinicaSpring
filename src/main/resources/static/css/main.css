@@ -469,7 +469,7 @@ input.input100 {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 60px; /* Agrega esta línea para establecer el margen superior */
+  margin-top: 40px; /* Agrega esta línea para establecer el margen superior */
 }
 
 .login100-form-btn {

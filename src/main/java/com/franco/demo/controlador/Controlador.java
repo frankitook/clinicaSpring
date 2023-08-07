@@ -49,8 +49,15 @@ public class Controlador {
         Usuario usuario = service.buscarPorEmail(correo);
     
         if (usuario != null && passwordEncoder.matches(contrasena, usuario.getContrasena())) {
-            model.addAttribute("mensaje", "Hola " + correo + ", has iniciado sesión correctamente.");
-            return "bienvenida";
+           
+            if(usuario.getTipo().equals("Paciente")){
+            return "paciente";
+            }else{
+
+                return "medico";
+            }
+
+            
         } else {
             model.addAttribute("error", "Usuario o contraseña inválida. Inténtalo de nuevo.");
             return "index";

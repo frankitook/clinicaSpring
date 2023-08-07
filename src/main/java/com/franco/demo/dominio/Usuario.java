@@ -1,8 +1,11 @@
 package com.franco.demo.dominio;
 
-import javax.persistence.Entity;
 
+
+
+import javax.persistence.Entity;
 import javax.persistence.Id;
+
 import javax.persistence.Table;
 
 @Entity
@@ -11,16 +14,14 @@ public class Usuario {
     
     @Id
     private int dni;
+
     private String nombre;
     private String apellido;
     private String email;
     private String contrasena;
     private String tipo;
 
-    public Usuario() {
-    }
 
-  
 
     // Getters y Setters
 

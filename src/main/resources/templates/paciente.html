@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <title>Inicio</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="/vendorr/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="/assets/css/templatemo-grad-school.css">
+    <link rel="stylesheet" href="/assets/css/owl.css">
+    <link rel="stylesheet" href="/assets/css/lightbox.css">
+
+  </head>
+
+<body>
+
+   
+  <!--header-->
+  <header class="main-header clearfix" role="header">
+    <div class="logo">
+      <a href="#"><em>Clinica</em> turnos</a>
+    </div>
+    <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+    <nav id="menu" class="main-nav" role="navigation">
+      <ul class="main-menu">
+        <li><a href="#section1">Ver Mis Turnos</a></li>
+        <li><a href="#section2">Sacar nuevo turno</a>
+        
+       
+        <li><a href="/home/cerrar" class="external">Cerrar Sesion</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1>Tabla PacienteMedico</h1>
+    <table >
+        <tr>
+            <th>Nombre del Paciente</th>
+            <th>Nombre del Médico</th>
+            <th>DNI del Paciente</th>
+        </tr>
+        <!-- Suponiendo que tienes una lista de objetos PacienteMedico llamada "pacienteMedicoList" en el modelo -->
+        <!-- Puedes usar la sintaxis de Thymeleaf para iterar sobre los registros -->
+        <!-- En cada iteración, accederías a los atributos del paciente y del médico para mostrar la información -->
+        <tr th:each="pacienteMedico : ${pacienteMedicoList}">
+            <td th:text="${pacienteMedico.paciente.nombre} + ' ' + ${pacienteMedico.paciente.apellido}"></td>
+            <td th:text="${pacienteMedico.medico.nombre} + ' ' + ${pacienteMedico.medico.apellido}"></td>
+            <td th:text="${pacienteMedico.paciente.dni}"></td>
+        </tr>
+    </table>
+  
+
+
+    <script src="/vendorr/jquery/jquery.min.js"></script>
+    <script src="/vendorr/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/isotope.min.js"></script>
+    <script src="/assets/js/owl-carousel.js"></script>
+    <script src="/assets/js/lightbox.js"></script>
+    <script src="/assets/js/tabs.js"></script>
+    <script src="/assets/js/video.js"></script>
+    <script src="/assets/js/slick-slider.js"></script>
+    <script src="/assets/js/custom.js"></script>
+    <script>
+        //according to loftblog tut
+        $('.nav li:first').addClass('active');
+
+        var showSection = function showSection(section, isAnimate) {
+          var
+          direction = section.replace(/#/, ''),
+          reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+          reqSectionPos = reqSection.offset().top - 0;
+
+          if (isAnimate) {
+            $('body, html').animate({
+              scrollTop: reqSectionPos },
+            800);
+          } else {
+            $('body, html').scrollTop(reqSectionPos);
+          }
+
+        };
+
+        var checkSection = function checkSection() {
+          $('.section').each(function () {
+            var
+            $this = $(this),
+            topEdge = $this.offset().top - 80,
+            bottomEdge = topEdge + $this.height(),
+            wScroll = $(window).scrollTop();
+            if (topEdge < wScroll && bottomEdge > wScroll) {
+              var
+              currentId = $this.data('section'),
+              reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+              reqLink.closest('li').addClass('active').
+              siblings().removeClass('active');
+            }
+          });
+        };
+
+        $('.main-menu, .scroll-to-section').on('click', 'a', function (e) {
+          if($(e.target).hasClass('external')) {
+            return;
+          }
+          e.preventDefault();
+          $('#menu').removeClass('active');
+          showSection($(this).attr('href'), true);
+        });
+
+        $(window).scroll(function () {
+          checkSection();
+        });
+    </script>
+</body>
+</html>
