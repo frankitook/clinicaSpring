@@ -56,8 +56,6 @@ public class Turno {
 
 
 
-
-
     public Turno(int idTurno,Usuario paciente,Usuario medico, Date fechaAtencion, Time horaAtencion,String estado) {
         this.estado = estado;
         this.fechaAtencion = fechaAtencion;

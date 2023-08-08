@@ -50,6 +50,8 @@ showStep(currentStep);
    }
 
  };
+
+ 
  
  
 
@@ -92,6 +94,12 @@ function cargarInicioYMostrarFormulario() {
 
   mostrarFormulario();
 }
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  mostrarTabla();
+
+});
 
  var checkSection = function checkSection() {
    $('.section').each(function () {

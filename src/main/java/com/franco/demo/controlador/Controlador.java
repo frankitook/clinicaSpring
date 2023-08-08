@@ -5,16 +5,21 @@ package com.franco.demo.controlador;
 
 import java.sql.Date;
 import java.sql.Time;
+
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,16 +76,42 @@ public class Controlador {
     return "redirect:/home/inicioPaciente"; 
 }
 
-
-
-     
-
-       @GetMapping("/inicioMedico")
-    public String inicioMedico(Model model) {
-        List<Turno> turnos = servicio.traeTurnosDeUnMedico(usuarioPaciente);
-        model.addAttribute("turnos", turnos);
-        return "medico";
+@PostMapping("/cancelarTurno/{id}")
+public String cancelarTurno(@PathVariable String id) {
+    Optional<Turno> turno = servicio.traeUnTurno(Integer.parseInt(id));
+    if (turno.isPresent()) {
+        Turno t = turno.get();
+        t.setEstado("Cancelado");
+        servicio.guardar(t);
     }
+    return "redirect:/home/inicioPaciente";
+}
+
+
+@PostMapping("/finalizarTurno/{id}")
+public String finalizarTurno(@PathVariable String id) {
+    Optional<Turno> turno = servicio.traeUnTurno(Integer.parseInt(id));
+    if (turno.isPresent()) {
+        Turno t = turno.get();
+        t.setEstado("Finalizado");
+        servicio.guardar(t);
+    }
+    return "redirect:/home/inicioMedico";
+}
+
+@GetMapping("/inicioMedico")
+public String inicioMedico(Model model) {
+    List<Turno> turnos = servicio.traeTurnosDeUnMedico(usuarioPaciente);
+
+    // Ordenar la lista de turnos por fecha y hora ascendente
+    Collections.sort(turnos, 
+        Comparator.comparing(Turno::getFechaAtencion)
+                  .thenComparing(Turno::getHoraAtencion)
+    );
+
+    model.addAttribute("turnos", turnos);
+    return "medico";
+}
 
 
     @GetMapping("/inicioPaciente")
@@ -90,6 +121,10 @@ public class Controlador {
         List<Turno> turnos = servicio.traeTurnosDeUnPaciente(usuarioPaciente);
         List<Usuario> listaMedicos= service.traeMedicos();
 
+        Collections.sort(turnos, 
+        Comparator.comparing(Turno::getFechaAtencion)
+                  .thenComparing(Turno::getHoraAtencion)
+    );
         atributos.put("medicos", listaMedicos);
         atributos.put("turnos", turnos);
         

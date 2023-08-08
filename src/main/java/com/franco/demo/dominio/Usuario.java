@@ -3,6 +3,8 @@ package com.franco.demo.dominio;
 
 
 
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -20,6 +22,11 @@ public class Usuario {
     private String contrasena;
     private String tipo;
 
+    @Column(name = "obraSocial")
+    private String obrasocial;
+    
+    private String especialidad;
+
 
     
 
@@ -28,6 +35,19 @@ public class Usuario {
     public Usuario() {
     }
 
+
+
+    public Usuario(int dni, String nombre, String apellido, String email, String contrasena, String tipo,
+            String obrasocial, String especialidad) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.contrasena = contrasena;
+        this.tipo = tipo;
+        this.obrasocial = obrasocial;
+        this.especialidad = especialidad;
+    }
 
 
 
@@ -40,8 +60,33 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-
     
+    
+    public String getObrasocial() {
+        return obrasocial;
+    }
+
+
+
+    public void setObrasocial(String obrasocial) {
+        this.obrasocial = obrasocial;
+    }
+
+
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+
+
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
+
+
 
     public String getNombre() {
         return nombre;

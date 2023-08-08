@@ -3,6 +3,19 @@
     margin-top: 80px;
   }
   
+  #verTurnosButtonContainer {
+    background-color: #007bff; /* Color de fondo deseado */
+    border: 2px solid #fff; /* Color de borde deseado */
+    padding: 10px; /* Espacio interior deseado */
+    border-radius: 5px; /* Bordes redondeados deseado */
+    display: inline-block; /* Para que el contenedor se ajuste al contenido */
+}
+
+#verTurnosButton {
+    color: #fff; /* Color de texto deseado */
+    text-decoration: none; /* Quita el subrayado del texto */
+}
+
  /* Estilos para la tabla */
 .tabla-container {
   width: 100%;

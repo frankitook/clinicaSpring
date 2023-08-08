@@ -1,7 +1,8 @@
 package com.franco.demo.servicios;
 
-import java.util.List;
 
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,13 @@ public class TurnoService implements ITurnoService {
     public List<Turno> traeTurnosDeUnPaciente(Usuario paciente) {
        return dao.findByPaciente(paciente);
     }
+
+    @Override
+    public Optional<Turno> traeUnTurno(int id) {
+        return dao.findById(id);
+    }
+
+   
 
    
 
