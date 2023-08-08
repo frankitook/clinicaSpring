@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+
+   
+    <title>Inicio</title>
+    
+    <link rel="stylesheet" href="/estiloTabla.css">
+
+  </head>
+
+<body>
+
+  
+  
+
+  <div class="tabla-container">
+    <table id="turnosTable">
+        <thead>
+            <tr>
+            
+                <th>Nombre Médico</th>
+                <th>Fecha de Atención</th>
+                <th>Hora de Atención</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="turno : ${turnos}">
+                
+                <td th:text="${turno.medico.nombre} + ' ' + ${turno.medico.apellido}"></td>
+                <td th:text="${turno.fechaAtencion}"></td>
+                <td th:text="${turno.horaAtencion}"></td>
+                <td th:text="${turno.estado}"></td>
+                <td>
+                  <button class="finalizar" th:text="Finalizar" onclick=""></button>
+                  <button class="cancelar" th:text="Cancelar" onclick=""></button>
+              </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+
+   
+</body>
+</html>

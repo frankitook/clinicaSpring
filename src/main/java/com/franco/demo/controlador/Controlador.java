@@ -6,7 +6,9 @@ package com.franco.demo.controlador;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -71,22 +73,29 @@ public class Controlador {
 
 
 
-      @GetMapping("/inicioPaciente")
-    public String inicioPaciente(Model model) {
-        
-        List<Usuario> listaMedicos= service.traeMedicos();
-        List<Turno> turnos = servicio.traeTurnosDeUnMedico(usuarioPaciente);
-        model.addAttribute("turnos", turnos);
-        model.addAttribute("medicos", listaMedicos);
-  
-        return "paciente";
-    }
+     
 
        @GetMapping("/inicioMedico")
     public String inicioMedico(Model model) {
         List<Turno> turnos = servicio.traeTurnosDeUnMedico(usuarioPaciente);
         model.addAttribute("turnos", turnos);
         return "medico";
+    }
+
+
+    @GetMapping("/inicioPaciente")
+    public String inicioPaciente(Model model) {
+        Map<String, Object> atributos = new HashMap<>();
+       
+        List<Turno> turnos = servicio.traeTurnosDeUnPaciente(usuarioPaciente);
+        List<Usuario> listaMedicos= service.traeMedicos();
+
+        atributos.put("medicos", listaMedicos);
+        atributos.put("turnos", turnos);
+        
+
+        model.addAllAttributes(atributos);
+        return "paciente";
     }
 
   

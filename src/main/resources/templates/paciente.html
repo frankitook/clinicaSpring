@@ -24,20 +24,20 @@
 
 <body>
 
-   <!--header-->
-   <header class="main-header clearfix" role="header">
+  <header class="main-header clearfix" role="header">
     <div class="logo">
       <a href="#"><em>Clinica</em> turnos</a>
     </div>
     <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
     <nav id="menu" class="main-nav" role="navigation">
       <ul class="main-menu">
-        <li><a href="/home/turnos">Ver Mis Turnos</a></li>
-        <li><a href="#section2" onclick="mostrarFormulario()">Sacar nuevo turno</a></li>
+        <li><a  class="external" onclick="mostrarTabla()">Ver Mis Turnos</a></li>
+        <li><a class="external" onclick="cargarInicioYMostrarFormulario()">Sacar nuevo turno</a></li>
         <li><a href="/home/cerrar" class="external">Cerrar Sesion</a></li>
       </ul>
     </nav>
-  </header>
+</header>
+  
   <div class="container" id="contenedorPrincipal" style="display: none;">
     <div id="contenedorFormulario" style="display: none;">
       <h2>Registro de Turno</h2>
@@ -83,31 +83,40 @@
       </form>
     </div>
 
-
-   
-
   </div>
 
-  <div id="tablaTurnos">
-    <h2>Turnos Agendados</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre del Médico</th>
-          <th>Fecha</th>
-          <th>Hora</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Utiliza Thymeleaf para iterar sobre los turnos y mostrarlos en la tabla -->
-        <tr th:each="turno : ${turnos}">
-          <td th:text="${turno.medico.nombre + ' ' + turno.medico.apellido}"></td>
-          <td th:text="${turno.fechaAtencion}"></td>
-          <td th:text="${turno.horaAtencion}"></td>
-        </tr>
-      </tbody>
+
+
+  
+  <div class="tabla-container" id="contenedorTabla" style="display: none;">
+    <table id="turnosTable">
+        <thead>
+            <tr>
+            
+                <th>Nombre Médico</th>
+                <th>Fecha de Atención</th>
+                <th>Hora de Atención</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="turno : ${turnos}">
+                
+                <td th:text="${turno.medico.nombre} + ' ' + ${turno.medico.apellido}"></td>
+                <td th:text="${#dates.format(turno.fechaAtencion, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#strings.substring(turno.horaAtencion, 0, 5)}"></td>
+                <td th:text="${turno.estado}"></td>
+                <td>
+                  <button class="finalizar" th:text="Finalizar" onclick=""></button>
+                  <button class="cancelar" th:text="Cancelar" onclick=""></button>
+              </td>
+            </tr>
+        </tbody>
     </table>
   </div>
+
+  
 
     <script src="/vendorr/jquery/jquery.min.js"></script>
     <script src="/vendorr/bootstrap/js/bootstrap.bundle.min.js"></script>

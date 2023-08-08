@@ -51,14 +51,46 @@ showStep(currentStep);
 
  };
  
+ 
+
+ function mostrarTabla() {
+  document.getElementById("contenedorTabla").style.display = "block";
+  
+  var contenedorFormulario = document.getElementById("contenedorPrincipal");
+  contenedorFormulario.style.display = "none";
+
+  var contenedorFormulario1 = document.getElementById("contenedorFormulario");
+  contenedorFormulario1.style.display = "none";
+}
+
 
 
  function mostrarFormulario() {
+
+  document.getElementById("contenedorTabla").style.display = "none";
   var contenedorFormulario = document.getElementById("contenedorPrincipal");
   contenedorFormulario.style.display = "block";
 
   var contenedorFormulario1 = document.getElementById("contenedorFormulario");
   contenedorFormulario1.style.display = "block";
+}
+
+
+function cargarInicioYMostrarFormulario() {
+
+  $.ajax({
+      url: "/home/inicioPaciente",
+      type: "GET",
+      success: function(response) {
+          // Aquí puedes realizar las acciones que necesitas después de cargar /home/inicioPaciente
+          mostrarFormulario();
+      },
+      error: function(error) {
+          console.error("Error al cargar /home/inicioPaciente:", error);
+      }
+  });
+
+  mostrarFormulario();
 }
 
  var checkSection = function checkSection() {

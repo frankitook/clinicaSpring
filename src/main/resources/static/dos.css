@@ -1,32 +1,59 @@
 /* Estilos para la tabla de turnos */
-#tablaTurnos {
-    margin-top: 20px;
+#turnosTable {
+    margin-top: 80px;
   }
   
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
+ /* Estilos para la tabla */
+.tabla-container {
+  width: 100%;
   
-  .table th,
-  .table td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .table th {
-    background-color: #f2f2f2;
-  }
-  
-  /* Estilos para alternar el color de fondo de las filas */
-  .table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  /* Hover sobre las filas */
-  .table tbody tr:hover {
-    background-color: #e0e0e0;
-  }
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#turnosTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#turnosTable th,
+#turnosTable td {
+  padding: 10px;
+  text-align: center;
+}
+
+#turnosTable th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+#turnosTable tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+/* Estilos para los botones */
+.finalizar,
+.cancelar {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.finalizar {
+  background-color: #5cb85c;
+}
+
+.cancelar {
+  background-color: #d9534f;
+}
+
+#turnosTable button:hover {
+  transform: scale(1.05); /* Agrandar el botón en un 10% */
+}
   
