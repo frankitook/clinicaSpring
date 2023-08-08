@@ -17,94 +17,108 @@
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="/assets/css/fontawesome.css">
     <link rel="stylesheet" href="/assets/css/templatemo-grad-school.css">
-    <link rel="stylesheet" href="/assets/css/owl.css">
-    <link rel="stylesheet" href="/assets/css/lightbox.css">
-
+    
+    <link rel="stylesheet" href="/estiloPaciente.css">
+    <link rel="stylesheet" href="/dos.css">
   </head>
 
 <body>
 
-   
-  <!--header-->
-  <header class="main-header clearfix" role="header">
+   <!--header-->
+   <header class="main-header clearfix" role="header">
     <div class="logo">
       <a href="#"><em>Clinica</em> turnos</a>
     </div>
     <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
     <nav id="menu" class="main-nav" role="navigation">
       <ul class="main-menu">
-        <li><a href="#section1">Ver Mis Turnos</a></li>
-        <li><a href="#section2">Sacar nuevo turno</a>
-        
-       
+        <li><a href="/home/turnos">Ver Mis Turnos</a></li>
+        <li><a href="#section2" onclick="mostrarFormulario()">Sacar nuevo turno</a></li>
         <li><a href="/home/cerrar" class="external">Cerrar Sesion</a></li>
       </ul>
     </nav>
   </header>
+  <div class="container" id="contenedorPrincipal" style="display: none;">
+    <div id="contenedorFormulario" style="display: none;">
+      <h2>Registro de Turno</h2>
 
-  
-  
+      <form method="post" action="/home/registrarTurno">
+        <!-- Paso 1: Selección del Médico -->
+        <div class="step" id="step1">
+          <label for="medico">Médico:</label>
+          <select id="medico" name="medicoId" required>
+            <!-- Utiliza Thymeleaf para iterar sobre la lista de médicos y mostrar nombre, apellido y horarios en las opciones -->
+            <option th:each="medico : ${medicos}" th:value="${medico.id}">
+              <!-- Muestra nombre, apellido y horarios en la opción -->
+              <span th:text="${medico.nombre + ' ' + medico.apellido}"></span>
+            </option>
+          </select>
+          <button onclick="nextStep(1)">Siguiente</button>
+        </div>
 
+        <!-- Paso 2: Fecha y Hora de Atención -->
+        <div class="step" id="step2">
+          <label for="fechaAtencion">Fecha de Atención:</label>
+          <input type="date" id="fechaAtencion" name="fechaAtencion" required>
+
+          <label for="horaAtencion">Hora de Atención:</label>
+          <select id="horaAtencion" name="horaAtencion" required>
+            <!-- Opciones para las horas en intervalos de media hora -->
+            <option value="08:00">08:00 AM</option>
+            <option value="08:30">08:30 AM</option>
+            <option value="09:00">09:00 AM</option>
+            <option value="09:30">09:30 AM</option>
+            <!-- Agrega más opciones para el resto del día -->
+            <option value="17:00">05:00 PM</option>
+            <option value="17:30">05:30 PM</option>
+            <option value="18:00">06:00 PM</option>
+            <option value="18:30">06:30 PM</option>
+            <!-- Y así sucesivamente -->
+          </select>
+          <button onclick="prevStep(1)">Anterior</button>
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <button type="submit">Guardar Turno</button>
+        </div>
+
+      </form>
+    </div>
+
+
+   
+
+  </div>
+
+  <div id="tablaTurnos">
+    <h2>Turnos Agendados</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre del Médico</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Utiliza Thymeleaf para iterar sobre los turnos y mostrarlos en la tabla -->
+        <tr th:each="turno : ${turnos}">
+          <td th:text="${turno.medico.nombre + ' ' + turno.medico.apellido}"></td>
+          <td th:text="${turno.fechaAtencion}"></td>
+          <td th:text="${turno.horaAtencion}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
     <script src="/vendorr/jquery/jquery.min.js"></script>
     <script src="/vendorr/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script src="/assets/js/isotope.min.js"></script>
-    <script src="/assets/js/owl-carousel.js"></script>
-    <script src="/assets/js/lightbox.js"></script>
+    
     <script src="/assets/js/tabs.js"></script>
     <script src="/assets/js/video.js"></script>
     <script src="/assets/js/slick-slider.js"></script>
     <script src="/assets/js/custom.js"></script>
-    <script>
-        //according to loftblog tut
-        $('.nav li:first').addClass('active');
-
-        var showSection = function showSection(section, isAnimate) {
-          var
-          direction = section.replace(/#/, ''),
-          reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-          reqSectionPos = reqSection.offset().top - 0;
-
-          if (isAnimate) {
-            $('body, html').animate({
-              scrollTop: reqSectionPos },
-            800);
-          } else {
-            $('body, html').scrollTop(reqSectionPos);
-          }
-
-        };
-
-        var checkSection = function checkSection() {
-          $('.section').each(function () {
-            var
-            $this = $(this),
-            topEdge = $this.offset().top - 80,
-            bottomEdge = topEdge + $this.height(),
-            wScroll = $(window).scrollTop();
-            if (topEdge < wScroll && bottomEdge > wScroll) {
-              var
-              currentId = $this.data('section'),
-              reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-              reqLink.closest('li').addClass('active').
-              siblings().removeClass('active');
-            }
-          });
-        };
-
-        $('.main-menu, .scroll-to-section').on('click', 'a', function (e) {
-          if($(e.target).hasClass('external')) {
-            return;
-          }
-          e.preventDefault();
-          $('#menu').removeClass('active');
-          showSection($(this).attr('href'), true);
-        });
-
-        $(window).scroll(function () {
-          checkSection();
-        });
-    </script>
+    <script src="/paciente.js"></script>
+    
 </body>
 </html>

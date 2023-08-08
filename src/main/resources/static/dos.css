@@ -1,0 +1,32 @@
+/* Estilos para la tabla de turnos */
+#tablaTurnos {
+    margin-top: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  .table th,
+  .table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #f2f2f2;
+  }
+  
+  /* Estilos para alternar el color de fondo de las filas */
+  .table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Hover sobre las filas */
+  .table tbody tr:hover {
+    background-color: #e0e0e0;
+  }
+  

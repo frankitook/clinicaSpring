@@ -19,7 +19,7 @@ public class Turno {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idTurno;
+    private int id_turno;
 
     @ManyToOne
     @JoinColumn(name = "dniPaciente")
@@ -29,6 +29,7 @@ public class Turno {
     @JoinColumn(name = "dniMedico")
     private Usuario medico;
 
+    
     
     @Column(name = "fechaAtencion")
     private Date fechaAtencion;
@@ -42,21 +43,36 @@ public class Turno {
     public Turno() {
     }
 
+    
+
+    public Turno(Usuario paciente, Usuario medico, Date fechaAtencion, Time horaAtencion, String estado) {
+        this.paciente = paciente;
+        this.medico = medico;
+        this.fechaAtencion = fechaAtencion;
+        this.horaAtencion = horaAtencion;
+        this.estado = estado;
+    }
+
+
+
+
+
+
     public Turno(int idTurno,Usuario paciente,Usuario medico, Date fechaAtencion, Time horaAtencion,String estado) {
         this.estado = estado;
         this.fechaAtencion = fechaAtencion;
         this.horaAtencion = horaAtencion;
-        this.idTurno = idTurno;
+        this.id_turno= idTurno;
         this.medico = medico;
         this.paciente = paciente;
     }
 
     public int getIdTurno() {
-        return idTurno;
+        return id_turno;
     }
 
     public void setIdTurno(int idTurno) {
-        this.idTurno = idTurno;
+        this.id_turno = idTurno;
     }
 
     public Usuario getPaciente() {

@@ -3,6 +3,9 @@ package com.franco.demo.controlador;
 
 
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,7 @@ public class Controlador {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
+    Usuario usuarioPaciente= new Usuario();
 
     @GetMapping("/saludo")
     public String saludar(){
@@ -49,22 +53,58 @@ public class Controlador {
         return "nuevoUsuario";
     }
 
+    @PostMapping("/registrarTurno")
+    public String guardarTurno(@RequestParam("medicoId") int medicoId,
+                               @RequestParam("fechaAtencion") Date fechaAtencion,
+                               @RequestParam("horaAtencion") String horaAtencionStr, 
+                               Model model) {
+
+
+    LocalTime horaAtencion = LocalTime.parse(horaAtencionStr);
+
+    Turno turno = new Turno(usuarioPaciente, service.buscarPorID(medicoId).get(), fechaAtencion, Time.valueOf(horaAtencion), "Pendiente");
+    servicio.guardar(turno);
+
+      
+    return "redirect:/home/inicioPaciente"; 
+}
+
+
+
+      @GetMapping("/inicioPaciente")
+    public String inicioPaciente(Model model) {
+        
+        List<Usuario> listaMedicos= service.traeMedicos();
+        List<Turno> turnos = servicio.traeTurnosDeUnMedico(usuarioPaciente);
+        model.addAttribute("turnos", turnos);
+        model.addAttribute("medicos", listaMedicos);
+  
+        return "paciente";
+    }
+
+       @GetMapping("/inicioMedico")
+    public String inicioMedico(Model model) {
+        List<Turno> turnos = servicio.traeTurnosDeUnMedico(usuarioPaciente);
+        model.addAttribute("turnos", turnos);
+        return "medico";
+    }
+
+  
 
     @PostMapping("/ingresar")
     public String ingresar(@RequestParam("correo") String correo, @RequestParam("contrasena") String contrasena, Model model) {
         // Buscar el usuario en la base de datos por correo
         Usuario usuario = service.buscarPorEmail(correo);
-    
+            usuarioPaciente = usuario;
         if (usuario != null && passwordEncoder.matches(contrasena, usuario.getContrasena())) {
            
             if(usuario.getTipo().equals("Paciente")){
-            return "paciente";
+                
+            return "redirect:/home/inicioPaciente";
             }else{
 
-                List<Turno> turnos = servicio.traeTurnos();
-                model.addAttribute("turnos", turnos);
-
-                return "medico";
+                
+                return "redirect:/home/inicioMedico";
             }
 
             

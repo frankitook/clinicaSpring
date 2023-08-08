@@ -23,7 +23,7 @@ public class Seguridad extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // Aquí puedes configurar la autorización y la seguridad en las rutas
         http.authorizeRequests()
-            .antMatchers("/public", "/home/registrar", "/home/ingresar").permitAll()
+            .antMatchers("/public", "/home/registrar", "/home/ingresar","/home/inicioPaciente","/home/registrarTurno").permitAll()
             .anyRequest().authenticated()
             .and()
             .httpBasic();

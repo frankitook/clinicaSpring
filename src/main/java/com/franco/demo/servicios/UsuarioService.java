@@ -1,5 +1,8 @@
 package com.franco.demo.servicios;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,20 @@ public class UsuarioService implements IUsuarioService{
     @Override
     public void guardar(Usuario u) {
         dao.save(u);
+    }
+
+
+
+    @Override
+    public List<Usuario> traeMedicos() {
+        return dao.findAllMedicos();
+    }
+
+
+
+    @Override
+    public Optional<Usuario> buscarPorID(int id) {
+        return dao.findById(id);
     }
     
     
