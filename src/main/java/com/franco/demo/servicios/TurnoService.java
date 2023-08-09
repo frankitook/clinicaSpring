@@ -7,8 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.franco.demo.dominio.Medico;
+import com.franco.demo.dominio.Paciente;
 import com.franco.demo.dominio.Turno;
-import com.franco.demo.dominio.Usuario;
+
 import com.franco.demo.interfazservicios.ITurnoService;
 import com.franco.demo.repositorio.TurnoRepository;
 
@@ -31,12 +33,12 @@ public class TurnoService implements ITurnoService {
     }
 
     @Override
-    public List<Turno> traeTurnosDeUnMedico(Usuario medico) {
+    public List<Turno> traeTurnosDeUnMedico(Medico medico) {
        return dao.findByMedico(medico);
     }
 
     @Override
-    public List<Turno> traeTurnosDeUnPaciente(Usuario paciente) {
+    public List<Turno> traeTurnosDeUnPaciente(Paciente paciente) {
        return dao.findByPaciente(paciente);
     }
 

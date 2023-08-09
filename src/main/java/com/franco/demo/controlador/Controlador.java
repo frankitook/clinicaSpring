@@ -24,10 +24,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.franco.demo.dominio.Medico;
+import com.franco.demo.dominio.Paciente;
 import com.franco.demo.dominio.Turno;
-import com.franco.demo.dominio.Usuario;
+
+import com.franco.demo.interfazservicios.IMedicoService;
+import com.franco.demo.interfazservicios.IPacienteService;
 import com.franco.demo.interfazservicios.ITurnoService;
-import com.franco.demo.interfazservicios.IUsuarioService;
+
 
 
 
@@ -38,8 +42,12 @@ import com.franco.demo.interfazservicios.IUsuarioService;
 @RequestMapping("/home")
 public class Controlador {
 
+    
      @Autowired
-    private IUsuarioService service;
+    private IPacienteService servicioPaciente;
+
+     @Autowired
+    private IMedicoService servicioMedico;
 
      @Autowired
      private ITurnoService servicio;
@@ -47,7 +55,8 @@ public class Controlador {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    Usuario usuarioPaciente= new Usuario();
+    Paciente usuarioPaciente= new Paciente();
+    Medico usuarioMedico= new Medico();
 
     @GetMapping("/saludo")
     public String saludar(){
@@ -69,7 +78,7 @@ public class Controlador {
 
     LocalTime horaAtencion = LocalTime.parse(horaAtencionStr);
 
-    Turno turno = new Turno(usuarioPaciente, service.buscarPorID(medicoId).get(), fechaAtencion, Time.valueOf(horaAtencion), "Pendiente");
+    Turno turno = new Turno(usuarioPaciente, servicioMedico.buscarPorID(medicoId).get(), fechaAtencion, Time.valueOf(horaAtencion), "Pendiente");
     servicio.guardar(turno);
 
       
@@ -101,7 +110,7 @@ public String finalizarTurno(@PathVariable String id) {
 
 @GetMapping("/inicioMedico")
 public String inicioMedico(Model model) {
-    List<Turno> turnos = servicio.traeTurnosDeUnMedico(usuarioPaciente);
+    List<Turno> turnos = servicio.traeTurnosDeUnMedico(usuarioMedico);
 
     // Ordenar la lista de turnos por fecha y hora ascendente
     Collections.sort(turnos, 
@@ -119,7 +128,7 @@ public String inicioMedico(Model model) {
         Map<String, Object> atributos = new HashMap<>();
        
         List<Turno> turnos = servicio.traeTurnosDeUnPaciente(usuarioPaciente);
-        List<Usuario> listaMedicos= service.traeMedicos();
+        List<Medico> listaMedicos= servicioMedico.traeMedicos();
 
         Collections.sort(turnos, 
         Comparator.comparing(Turno::getFechaAtencion)
@@ -138,21 +147,24 @@ public String inicioMedico(Model model) {
     @PostMapping("/ingresar")
     public String ingresar(@RequestParam("correo") String correo, @RequestParam("contrasena") String contrasena, Model model) {
         // Buscar el usuario en la base de datos por correo
-        Usuario usuario = service.buscarPorEmail(correo);
-            usuarioPaciente = usuario;
-        if (usuario != null && passwordEncoder.matches(contrasena, usuario.getContrasena())) {
+        Medico usuarioM = servicioMedico.buscarMedicoPorEmail(correo);
+            
+        if (usuarioM != null && passwordEncoder.matches(contrasena, usuarioM.getContrasena())) {
            
-            if(usuario.getTipo().equals("Paciente")){
-                
-            return "redirect:/home/inicioPaciente";
-            }else{
-
-                
+                usuarioMedico= usuarioM;
                 return "redirect:/home/inicioMedico";
-            }
-
+            
             
         } else {
+
+            Paciente usuarioP = servicioPaciente.buscarPorEmail(correo);
+
+            if (usuarioP != null && passwordEncoder.matches(contrasena, usuarioP.getContrasena())) {
+                usuarioPaciente=usuarioP;
+                
+                return "redirect:/home/inicioPaciente";
+            }
+
             model.addAttribute("error", "Usuario o contraseña inválida. Inténtalo de nuevo.");
             return "index";
         }
@@ -169,13 +181,21 @@ public String inicioMedico(Model model) {
                                    Model model) {
 
         
-        Usuario nuevoUsuario = new Usuario(Integer.parseInt(dni),convertirPrimeraLetraMayuscula(nombre),convertirPrimeraLetraMayuscula(apellido),correo, passwordEncoder.encode(contrasena),tipo);
+        if(tipo.equals("Paciente")){
 
-        // Guardar el nuevo usuario en la base de datos
-        service.guardar(nuevoUsuario);
+            Paciente paciente = new Paciente(Integer.parseInt(dni), convertirPrimeraLetraMayuscula(nombre),convertirPrimeraLetraMayuscula( apellido), correo, passwordEncoder.encode(contrasena));
+            servicioPaciente.guardar(paciente);
+            
+        } else{
 
+            Medico medico = new Medico(Integer.parseInt(dni), convertirPrimeraLetraMayuscula(nombre),convertirPrimeraLetraMayuscula( apellido), correo, passwordEncoder.encode(contrasena));
+            servicioMedico.guardar(medico);
+
+        }                           
+        
         return "redirect:/home/saludo";
     }
+
 
     @GetMapping("/cerrar")
     public String cerrarSesion(){
@@ -183,6 +203,8 @@ public String inicioMedico(Model model) {
         return "redirect:/home/saludo";
 
     }
+
+
 
     public String convertirPrimeraLetraMayuscula(String palabra) {
         if (palabra == null || palabra.isEmpty()) {

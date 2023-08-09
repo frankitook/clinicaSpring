@@ -23,11 +23,11 @@ public class Turno {
 
     @ManyToOne
     @JoinColumn(name = "dniPaciente")
-    private Usuario paciente;
+    private Paciente paciente;
 
     @ManyToOne
     @JoinColumn(name = "dniMedico")
-    private Usuario medico;
+    private Medico medico;
 
     
     
@@ -45,7 +45,8 @@ public class Turno {
 
     
 
-    public Turno(Usuario paciente, Usuario medico, Date fechaAtencion, Time horaAtencion, String estado) {
+
+    public Turno(Paciente paciente, Medico medico, Date fechaAtencion, Time horaAtencion, String estado) {
         this.paciente = paciente;
         this.medico = medico;
         this.fechaAtencion = fechaAtencion;
@@ -56,7 +57,7 @@ public class Turno {
 
 
 
-    public Turno(int idTurno,Usuario paciente,Usuario medico, Date fechaAtencion, Time horaAtencion,String estado) {
+    public Turno(int idTurno,Paciente paciente,Medico medico, Date fechaAtencion, Time horaAtencion,String estado) {
         this.estado = estado;
         this.fechaAtencion = fechaAtencion;
         this.horaAtencion = horaAtencion;
@@ -73,21 +74,35 @@ public class Turno {
         this.id_turno = idTurno;
     }
 
-    public Usuario getPaciente() {
+    
+
+    public Paciente getPaciente() {
         return paciente;
     }
 
-    public void setPaciente(Usuario paciente) {
+
+
+
+    public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
 
-    public Usuario getMedico() {
+
+
+
+    public Medico getMedico() {
         return medico;
     }
 
-    public void setMedico(Usuario medico) {
+
+
+
+    public void setMedico(Medico medico) {
         this.medico = medico;
     }
+
+
+
 
     public Date getFechaAtencion() {
         return fechaAtencion;

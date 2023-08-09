@@ -48,9 +48,9 @@
           <label for="medico">Médico:</label>
           <select id="medico" name="medicoId" required>
             <!-- Utiliza Thymeleaf para iterar sobre la lista de médicos y mostrar nombre, apellido y horarios en las opciones -->
-            <option th:each="medico : ${medicos}" th:value="${medico.id}">
+            <option th:each="medico : ${medicos}" th:value="${medico.dniMedico}">
               <!-- Muestra nombre, apellido y horarios en la opción -->
-              <span th:text="${medico.nombre + ' ' + medico.apellido}"></span>
+              <span th:text="${medico.nombre + ' ' + medico.apellido + ' - '+ medico.especialidad}"></span>
             </option>
           </select>
           <button onclick="nextStep(1)">Siguiente</button>
