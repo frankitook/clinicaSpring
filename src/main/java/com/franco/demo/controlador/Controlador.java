@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import com.franco.demo.dominio.HorarioMedico;
 import com.franco.demo.dominio.Medico;
 import com.franco.demo.dominio.Paciente;
@@ -75,17 +76,17 @@ public class Controlador {
     return "index";
     }
 
-
 @GetMapping("/obtenerHorarios")
 @ResponseBody
 public List<String> obtenerHorariosDisponibles(@RequestParam String fecha, @RequestParam String idMedico) throws ParseException {
-    List<String> horariosMostrar = new ArrayList<>();
     
-    String fechaTexto = fecha; // Ejemplo de cadena de texto de fecha
+    List<String> horariosMostrar = new ArrayList<>();
+
+    String fechaTexto = fecha;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-    java.util.Date utilDate = sdf.parse(fechaTexto); // Parsear la cadena a un objeto java.util.Date
-    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime()); // Convertir a java.sql.Date
+    java.util.Date utilDate = sdf.parse(fechaTexto);
+    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
     String diaa = obtenerDiaSemana(sqlDate);
 
@@ -93,13 +94,21 @@ public List<String> obtenerHorariosDisponibles(@RequestParam String fecha, @Requ
 
     List<HorarioMedico> horarios = servicioHorario.traeHorariosDeUnMedico(medico.get());
 
-    for (HorarioMedico horario : horarios) {
-        if (horario.getDia().equals(diaa)) {
-            List<String> horariosDelDia = generarHorarios(horario.getHoraInicio(), horario.getHoraFin());
-            horariosMostrar.addAll(horariosDelDia);
-        }
-    }
+    HorarioMedico h = new HorarioMedico();
+    for(HorarioMedico horario : horarios){
 
+        if(horario.getDia().equals(diaa)){
+
+             h = horario;
+        }
+
+    }
+    
+    java.sql.Time horaInicio = h.getHoraInicio();
+    java.sql.Time horaFin = h.getHoraFin();
+    
+    horariosMostrar = generarHorarios(horaInicio, horaFin);
+   
     return horariosMostrar;
 }
 
@@ -279,33 +288,32 @@ public String inicioMedico(Model model) {
         return null;
     }
 
-    public static List<String> generarHorarios(Time horaInicio, Time horaFin) {
-        List<String> horarios = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-    
-        try {
-            Calendar calInicio = Calendar.getInstance();
-            calInicio.setTimeInMillis(horaInicio.getTime());
-    
-            Calendar calFin = Calendar.getInstance();
-            calFin.setTimeInMillis(horaFin.getTime());
-    
-            while (calInicio.before(calFin)) {
-                horarios.add(sdf.format(calInicio.getTime()));
-                
-                // Crea un nuevo objeto Calendar en cada iteración
-                calInicio = (Calendar) calInicio.clone();
-                calInicio.add(Calendar.MINUTE, 45);
-            }
-    
-            horarios.add(sdf.format(calFin.getTime()));
-    
-        } catch (Exception e) {
-            e.printStackTrace();
+   public static List<String> generarHorarios(java.sql.Time horaInicio, java.sql.Time horaFin) {
+    List<String> horarios = new ArrayList<>();
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+    try {
+        Calendar calInicio = Calendar.getInstance();
+        calInicio.setTime(horaInicio);
+
+        Calendar calFin = Calendar.getInstance();
+        calFin.setTime(horaFin);
+
+        while (calInicio.before(calFin)) {
+            horarios.add(sdf.format(calInicio.getTime()));
+
+            calInicio = (Calendar) calInicio.clone();
+            calInicio.add(Calendar.MINUTE, 45);
         }
-    
-        return horarios;
+
+        horarios.add(sdf.format(calFin.getTime()));
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+
+    return horarios;
+}
 
     
 }

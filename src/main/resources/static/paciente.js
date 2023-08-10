@@ -31,6 +31,15 @@ $(document).ready(function() {
   });
 });
 
+// Obtener el elemento de input de fecha
+const fechaAtencionInput = document.getElementById('fechaAtencion');
+
+// Obtener la fecha de hoy en formato YYYY-MM-DD
+const fechaHoy = new Date().toISOString().split('T')[0];
+
+// Establecer el atributo 'min' del input de fecha para limitar a partir de la fecha de hoy
+fechaAtencionInput.setAttribute('min', fechaHoy);
+
 function nextStep(step) {
     currentStep = step + 1;
     showStep(currentStep);
