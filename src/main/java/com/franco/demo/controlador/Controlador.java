@@ -5,15 +5,20 @@ package com.franco.demo.controlador;
 
 import java.sql.Date;
 import java.sql.Time;
-
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+
+
+import java.text.ParseException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,10 +31,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.franco.demo.dominio.HorarioMedico;
 import com.franco.demo.dominio.Medico;
 import com.franco.demo.dominio.Paciente;
 import com.franco.demo.dominio.Turno;
-
+import com.franco.demo.interfazservicios.IHorarioMedicoService;
 import com.franco.demo.interfazservicios.IMedicoService;
 import com.franco.demo.interfazservicios.IPacienteService;
 import com.franco.demo.interfazservicios.ITurnoService;
@@ -47,6 +53,9 @@ public class Controlador {
     
      @Autowired
     private IPacienteService servicioPaciente;
+
+    @Autowired
+    private IHorarioMedicoService servicioHorario;
 
      @Autowired
     private IMedicoService servicioMedico;
@@ -67,25 +76,32 @@ public class Controlador {
     }
 
 
-    @GetMapping("/obtenerHorarios")
-    @ResponseBody
-    public List<String> obtenerHorariosDisponibles(@RequestParam String fecha) {
-        List<String> horarios = new ArrayList<>();
-        // Simulación de obtención de horarios desde la base de datos
-        if ("2023-08-10".equals(fecha)) {
-            horarios.add("08:00");
-            horarios.add("08:30");
-            horarios.add("09:00");
-            // Agrega más horarios según la disponibilidad
-        } else if ("2023-08-11".equals(fecha)) {
-            horarios.add("10:00");
-            horarios.add("10:30");
-            horarios.add("11:00");
-            // Agrega más horarios según la disponibilidad
+@GetMapping("/obtenerHorarios")
+@ResponseBody
+public List<String> obtenerHorariosDisponibles(@RequestParam String fecha, @RequestParam String idMedico) throws ParseException {
+    List<String> horariosMostrar = new ArrayList<>();
+    
+    String fechaTexto = fecha; // Ejemplo de cadena de texto de fecha
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    java.util.Date utilDate = sdf.parse(fechaTexto); // Parsear la cadena a un objeto java.util.Date
+    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime()); // Convertir a java.sql.Date
+
+    String diaa = obtenerDiaSemana(sqlDate);
+
+    Optional<Medico> medico = servicioMedico.buscarPorID(Integer.parseInt(idMedico));
+
+    List<HorarioMedico> horarios = servicioHorario.traeHorariosDeUnMedico(medico.get());
+
+    for (HorarioMedico horario : horarios) {
+        if (horario.getDia().equals(diaa)) {
+            List<String> horariosDelDia = generarHorarios(horario.getHoraInicio(), horario.getHoraFin());
+            horariosMostrar.addAll(horariosDelDia);
         }
-        
-        return horarios;
     }
+
+    return horariosMostrar;
+}
 
 
     @GetMapping("/registro")
@@ -246,7 +262,50 @@ public String inicioMedico(Model model) {
     }
     
 
+     public  String obtenerDiaSemana(Date fecha) {
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(fecha);
+
+            int diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
+
+            String[] nombresDias = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
+            return nombresDias[diaSemana - 1];
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static List<String> generarHorarios(Time horaInicio, Time horaFin) {
+        List<String> horarios = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     
+        try {
+            Calendar calInicio = Calendar.getInstance();
+            calInicio.setTimeInMillis(horaInicio.getTime());
+    
+            Calendar calFin = Calendar.getInstance();
+            calFin.setTimeInMillis(horaFin.getTime());
+    
+            while (calInicio.before(calFin)) {
+                horarios.add(sdf.format(calInicio.getTime()));
+                
+                // Crea un nuevo objeto Calendar en cada iteración
+                calInicio = (Calendar) calInicio.clone();
+                calInicio.add(Calendar.MINUTE, 45);
+            }
+    
+            horarios.add(sdf.format(calFin.getTime()));
+    
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+        return horarios;
+    }
 
     
 }

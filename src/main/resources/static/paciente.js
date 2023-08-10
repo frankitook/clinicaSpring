@@ -10,20 +10,24 @@ function showStep(step) {
 
 $(document).ready(function() {
   $('#fechaAtencion').change(function() {
-    var selectedDate = $(this).val();
-    
-    $.ajax({
-      url: '/home/obtenerHorarios',  // Cambia esta URL por la que corresponda en tu aplicación
-      method: 'GET',
-      data: { fecha: selectedDate },
-      success: function(data) {
-        var options = '';
-        data.forEach(function(hora) {
-          options += '<option value="' + hora + '">' + hora + '</option>';
-        });
-        $('#horaAtencion').html(options);
-      }
-    });
+      var selectedDate = $(this).val();
+      var idMedico = $('#medico').val(); // Obtener el ID del médico seleccionado
+      
+      $.ajax({
+          url: '/home/obtenerHorarios',
+          method: 'GET',
+          data: {
+              fecha: selectedDate,
+              idMedico: idMedico
+          },
+          success: function(data) {
+              var options = '';
+              data.forEach(function(hora) {
+                  options += '<option value="' + hora + '">' + hora + '</option>';
+              });
+              $('#horaAtencion').html(options);
+          }
+      });
   });
 });
 
