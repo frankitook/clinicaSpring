@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.franco.demo.dominio.Medico;
 import com.franco.demo.dominio.Paciente;
@@ -63,6 +65,28 @@ public class Controlador {
        
     return "index";
     }
+
+
+    @GetMapping("/obtenerHorarios")
+    @ResponseBody
+    public List<String> obtenerHorariosDisponibles(@RequestParam String fecha) {
+        List<String> horarios = new ArrayList<>();
+        // Simulación de obtención de horarios desde la base de datos
+        if ("2023-08-10".equals(fecha)) {
+            horarios.add("08:00");
+            horarios.add("08:30");
+            horarios.add("09:00");
+            // Agrega más horarios según la disponibilidad
+        } else if ("2023-08-11".equals(fecha)) {
+            horarios.add("10:00");
+            horarios.add("10:30");
+            horarios.add("11:00");
+            // Agrega más horarios según la disponibilidad
+        }
+        
+        return horarios;
+    }
+
 
     @GetMapping("/registro")
     public String mostrarFormularioRegistro() {

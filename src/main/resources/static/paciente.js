@@ -8,6 +8,25 @@ function showStep(step) {
     document.getElementById('step' + step).style.display = 'block';
 }
 
+$(document).ready(function() {
+  $('#fechaAtencion').change(function() {
+    var selectedDate = $(this).val();
+    
+    $.ajax({
+      url: '/home/obtenerHorarios',  // Cambia esta URL por la que corresponda en tu aplicación
+      method: 'GET',
+      data: { fecha: selectedDate },
+      success: function(data) {
+        var options = '';
+        data.forEach(function(hora) {
+          options += '<option value="' + hora + '">' + hora + '</option>';
+        });
+        $('#horaAtencion').html(options);
+      }
+    });
+  });
+});
+
 function nextStep(step) {
     currentStep = step + 1;
     showStep(currentStep);

@@ -57,28 +57,19 @@
         </div>
 
         <!-- Paso 2: Fecha y Hora de Atención -->
-        <div class="step" id="step2">
-          <label for="fechaAtencion">Fecha de Atención:</label>
-          <input type="date" id="fechaAtencion" name="fechaAtencion" required>
+<div class="step" id="step2">
+  <label for="fechaAtencion">Fecha de Atención:</label>
+  <input type="date" id="fechaAtencion" name="fechaAtencion" required>
 
-          <label for="horaAtencion">Hora de Atención:</label>
-          <select id="horaAtencion" name="horaAtencion" required>
-            <!-- Opciones para las horas en intervalos de media hora -->
-            <option value="08:00">08:00 AM</option>
-            <option value="08:30">08:30 AM</option>
-            <option value="09:00">09:00 AM</option>
-            <option value="09:30">09:30 AM</option>
-            <!-- Agrega más opciones para el resto del día -->
-            <option value="17:00">05:00 PM</option>
-            <option value="17:30">05:30 PM</option>
-            <option value="18:00">06:00 PM</option>
-            <option value="18:30">06:30 PM</option>
-            <!-- Y así sucesivamente -->
-          </select>
-          <button onclick="prevStep(1)">Anterior</button>
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-          <button type="submit">Guardar Turno</button>
-        </div>
+  <label for="horaAtencion">Hora de Atención:</label>
+  <select id="horaAtencion" name="horaAtencion" required>
+      <!-- Opciones para las horas en intervalos de media hora -->
+  </select>
+  
+  <button onclick="prevStep(1)">Anterior</button>
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+  <button type="submit">Guardar Turno</button>
+</div>
 
       </form>
     </div>
@@ -131,7 +122,7 @@
     <script src="/vendorr/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script src="/assets/js/isotope.min.js"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/assets/js/tabs.js"></script>
     <script src="/assets/js/video.js"></script>
     <script src="/assets/js/slick-slider.js"></script>
