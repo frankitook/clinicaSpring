@@ -9,26 +9,32 @@ function showStep(step) {
 }
 
 $(document).ready(function() {
-  $('#fechaAtencion').change(function() {
-      var selectedDate = $(this).val();
-      var idMedico = $('#medico').val(); // Obtener el ID del médico seleccionado
-      
-      $.ajax({
-          url: '/home/obtenerHorarios',
-          method: 'GET',
-          data: {
-              fecha: selectedDate,
-              idMedico: idMedico
-          },
-          success: function(data) {
-              var options = '';
-              data.forEach(function(hora) {
-                  options += '<option value="' + hora + '">' + hora + '</option>';
-              });
-              $('#horaAtencion').html(options);
-          }
-      });
-  });
+    $('#fechaAtencion').change(function() {
+        var selectedDate = $(this).val();
+        var idMedico = $('#medico').val(); // Obtener el ID del médico seleccionado
+        
+        $.ajax({
+            url: '/home/obtenerHorarios',
+            method: 'GET',
+            data: {
+                fecha: selectedDate,
+                idMedico: idMedico
+            },
+            success: function(data) {
+                var options = '';
+
+                if (data.length === 0) {
+                    options = '<option value="" disabled selected>No hay turnos</option>';
+                } else {
+                    data.forEach(function(hora) {
+                        options += '<option value="' + hora + '">' + hora + '</option>';
+                    });
+                }
+
+                $('#horaAtencion').html(options);
+            }
+        });
+    });
 });
 
 // Obtener el elemento de input de fecha
@@ -45,9 +51,13 @@ function nextStep(step) {
     showStep(currentStep);
 }
 
-function prevStep(step) {
-    currentStep = step - 1;
-    showStep(currentStep);
+// Función para ir al paso anterior
+function prevStep(stepNumber) {
+    var currentStep = $('#step' + stepNumber);
+    var previousStep = $('#step' + (stepNumber - 1));
+
+    currentStep.hide();
+    previousStep.show();
 }
 
 function submitForm() {
