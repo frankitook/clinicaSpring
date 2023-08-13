@@ -1,6 +1,7 @@
 package com.franco.demo.interfazservicios;
 
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,8 @@ public interface ITurnoService {
      public List<Turno> traeTurnosDeUnPaciente(Paciente paciente);
 
      public Optional<Turno> traeUnTurno(int id);
+
+     public List<Turno> traeTurnosDeUnMedicoEnUnaFecha(Medico medico, Date fecha);
 
      
 

@@ -1,6 +1,7 @@
 package com.franco.demo.servicios;
 
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +46,11 @@ public class TurnoService implements ITurnoService {
     @Override
     public Optional<Turno> traeUnTurno(int id) {
         return dao.findById(id);
+    }
+
+    @Override
+    public List<Turno> traeTurnosDeUnMedicoEnUnaFecha(Medico medico, Date fecha) {
+       return dao.findTurnosByMedicoAndFechaAtencion(medico, fecha);
     }
 
 

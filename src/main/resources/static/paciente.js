@@ -56,6 +56,11 @@ function prevStep(stepNumber) {
     var currentStep = $('#step' + stepNumber);
     var previousStep = $('#step' + (stepNumber - 1));
 
+    if (stepNumber === 2) {
+      document.getElementById("fechaAtencion").value = "";
+      document.getElementById("horaAtencion").value = "";
+    }
+    
     currentStep.hide();
     previousStep.show();
 }

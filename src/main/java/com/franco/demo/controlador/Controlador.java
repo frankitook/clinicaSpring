@@ -44,9 +44,6 @@ import com.franco.demo.interfazservicios.ITurnoService;
 
 
 
-
-
-
 @Controller
 @RequestMapping("/home")
 public class Controlador {
@@ -108,6 +105,32 @@ public List<String> obtenerHorariosDisponibles(@RequestParam String fecha, @Requ
     java.sql.Time horaFin = h.getHoraFin();
     
     horariosMostrar = generarHorarios(horaInicio, horaFin);
+
+    List<Turno> horariosTurnos = servicio.traeTurnosDeUnMedicoEnUnaFecha(medico.get(), sqlDate);
+
+
+    for(int i=0; i<horariosMostrar.size(); i++){
+
+        for(int j=0; j<horariosTurnos.size(); j++){
+
+
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+
+        
+        String horaFormateada = formatter.format(horariosTurnos.get(j).getHoraAtencion());
+
+            if(horariosMostrar.get(i).equals(horaFormateada)){
+
+                horariosMostrar.remove(i);
+
+            }
+
+        }
+
+
+    }
+
+    
    
     return horariosMostrar;
 }
