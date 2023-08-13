@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/assets/css/lightbox.css">
 
     <link rel="stylesheet" href="/estiloTabla.css">
-
+    <link rel="stylesheet" href="/estiloMedico.css">
   </head>
 
 <body>
@@ -35,9 +35,9 @@
     <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
     <nav id="menu" class="main-nav" role="navigation">
       <ul class="main-menu">
-        <li><a href="#section1">Ver Turnos</a></li>
+        <li><a  id="verTurnosButton" class="external" onclick="mostrarTabla()">Ver Turnos</a></li>
         <li><a href="#section2">Lista de Pacientes</a>
-          <li><a href="#section2">Mis Horarios</a>
+        <li><a class="external" onclick="mostrarHorarios()">Ver mis horarios</a></li>
        
         <li><a href="/home/cerrar" class="external">Cerrar Sesion</a></li>
       </ul>
@@ -45,7 +45,7 @@
   </header>
   
 
-  <div class="tabla-container">
+  <div class="tabla-container" id="contenedorTabla" style="display: none;">
     <table id="turnosTable">
         <thead>
             <tr>
@@ -80,6 +80,38 @@
 </div>
 
 
+<div class="tabla-container" id="contenedorHorarios" style="display: none;">
+  <table id="horariosTable">
+    <thead>
+      <tr>
+        <th>Día de la Semana</th>
+        <th>Hora de Inicio</th>
+        <th>Hora de Fin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Lunes</td>
+        <td>08:00 AM</td>
+        <td>12:00 PM</td>
+      </tr>
+      <tr>
+        <td>Martes</td>
+        <td>09:00 AM</td>
+        <td>01:00 PM</td>
+      </tr>
+      <!-- Agrega más filas según tus necesidades -->
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+
+
     <script src="/vendorr/jquery/jquery.min.js"></script>
     <script src="/vendorr/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -90,55 +122,7 @@
     <script src="/assets/js/video.js"></script>
     <script src="/assets/js/slick-slider.js"></script>
     <script src="/assets/js/custom.js"></script>
-    <script>
-        //according to loftblog tut
-        $('.nav li:first').addClass('active');
-
-        var showSection = function showSection(section, isAnimate) {
-          var
-          direction = section.replace(/#/, ''),
-          reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-          reqSectionPos = reqSection.offset().top - 0;
-
-          if (isAnimate) {
-            $('body, html').animate({
-              scrollTop: reqSectionPos },
-            800);
-          } else {
-            $('body, html').scrollTop(reqSectionPos);
-          }
-
-        };
-
-        var checkSection = function checkSection() {
-          $('.section').each(function () {
-            var
-            $this = $(this),
-            topEdge = $this.offset().top - 80,
-            bottomEdge = topEdge + $this.height(),
-            wScroll = $(window).scrollTop();
-            if (topEdge < wScroll && bottomEdge > wScroll) {
-              var
-              currentId = $this.data('section'),
-              reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-              reqLink.closest('li').addClass('active').
-              siblings().removeClass('active');
-            }
-          });
-        };
-
-        $('.main-menu, .scroll-to-section').on('click', 'a', function (e) {
-          if($(e.target).hasClass('external')) {
-            return;
-          }
-          e.preventDefault();
-          $('#menu').removeClass('active');
-          showSection($(this).attr('href'), true);
-        });
-
-        $(window).scroll(function () {
-          checkSection();
-        });
-    </script>
+    <script src="/medico.js"></script>
+    
 </body>
 </html>

@@ -136,6 +136,15 @@ public List<String> obtenerHorariosDisponibles(@RequestParam String fecha, @Requ
 }
 
 
+
+  @GetMapping("/obtenerHorarioDeMedico")
+  @ResponseBody
+    public String mostrarHorarioMedico() {
+
+
+        return "nuevoUsuario";
+    }
+
     @GetMapping("/registro")
     public String mostrarFormularioRegistro() {
         return "nuevoUsuario";
