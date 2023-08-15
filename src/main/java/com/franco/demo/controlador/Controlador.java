@@ -5,20 +5,17 @@ package com.franco.demo.controlador;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-
-
-import java.text.ParseException;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 
 import com.franco.demo.dominio.HorarioMedico;
 import com.franco.demo.dominio.Medico;
@@ -137,13 +133,7 @@ public List<String> obtenerHorariosDisponibles(@RequestParam String fecha, @Requ
 
 
 
-  @GetMapping("/obtenerHorarioDeMedico")
-  @ResponseBody
-    public String mostrarHorarioMedico() {
-
-
-        return "nuevoUsuario";
-    }
+  
 
     @GetMapping("/registro")
     public String mostrarFormularioRegistro() {
@@ -191,15 +181,22 @@ public String finalizarTurno(@PathVariable String id) {
 
 @GetMapping("/inicioMedico")
 public String inicioMedico(Model model) {
+    Map<String, Object> atributos = new HashMap<>();
     List<Turno> turnos = servicio.traeTurnosDeUnMedico(usuarioMedico);
-
+    List<HorarioMedico> horarios = servicioHorario.traeHorariosDeUnMedico(usuarioMedico);
     // Ordenar la lista de turnos por fecha y hora ascendente
     Collections.sort(turnos, 
         Comparator.comparing(Turno::getFechaAtencion)
                   .thenComparing(Turno::getHoraAtencion)
     );
 
-    model.addAttribute("turnos", turnos);
+        atributos.put("horarios", ordenarHorariosPorDia(horarios));
+        atributos.put("turnos", turnos);
+        
+
+        model.addAllAttributes(atributos);
+
+    
     return "medico";
 }
 
@@ -286,6 +283,22 @@ public String inicioMedico(Model model) {
     }
 
 
+   
+
+    @PostMapping("/modificar")
+    public String modificarHorarioMedico(
+        @RequestParam("dia") String diaModificado,
+        @RequestParam("horaInicio") Time horaInicio,
+        @RequestParam("horaFin") Time horaFin,
+        Model model) {
+        
+        model.addAttribute("diaModificado", diaModificado);
+        model.addAttribute("horaInicio", horaInicio);
+        model.addAttribute("horaFin", horaFin);
+        return "modificarTurnoMedico";
+    }
+    
+
 
     public String convertirPrimeraLetraMayuscula(String palabra) {
         if (palabra == null || palabra.isEmpty()) {
@@ -345,6 +358,29 @@ public String inicioMedico(Model model) {
     }
 
     return horarios;
+}
+
+public  List<HorarioMedico> ordenarHorariosPorDia(List<HorarioMedico> horarios) {
+
+    String[] ordenDias = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+    
+    List<HorarioMedico> horariosOrdenados= new ArrayList<>();
+
+    for(int i=0; i<ordenDias.length; i++) {
+
+        for(int j=0;j<horarios.size();j++) {
+
+            if(ordenDias[i].equals(horarios.get(j).getDia())){
+
+                horariosOrdenados.add(horarios.get(j));
+
+            }
+
+        }
+
+
+    }
+    return horariosOrdenados;
 }
 
     

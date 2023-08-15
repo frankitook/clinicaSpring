@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <link rel="stylesheet" href="/estiloModificarHorario.css">
+<head>
+    <title>Modificar Horario</title>
+    <!-- Aquí van tus etiquetas <link> y <script> si es necesario -->
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">Seleccione el horario</h1>
+                <p class="card-text">Dia:<span th:text="${diaModificado}"></span></p>
+                <p class="card-text">Hora de comienzo: <span th:text="${horaInicio}"></span></p>
+                <p class="card-text">Hora de finalizacion: <span th:text="${horaFin}"></span></p>
+                <form action="/home/guardar" method="post">
+                    <input type="hidden" name="dia" th:value="${diaModificado}" />
+                    <input type="hidden" name="horaInicio" th:value="${horaInicio}" />
+                    <input type="hidden" name="horaFin" th:value="${horaFin}" />
+                    <label for="nuevaHoraInicio">Nueva Hora de Comienzo:</label>
+                    <input type="time" id="nuevaHoraInicio" name="nuevaHoraInicio" />
+                    <label for="nuevaHoraFin">Nueva Hora de Finalizacion:</label>
+                    <input type="time" id="nuevaHoraFin" name="nuevaHoraFin" />
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+

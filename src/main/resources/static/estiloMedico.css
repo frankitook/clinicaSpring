@@ -1,24 +1,50 @@
  /* Estilo para la tabla de horarios */
  #horariosTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1px;
+}
 
-  /* Estilo para las celdas de encabezado (th) */
-  #horariosTable th {
-    background-color: #f2f2f2;
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  }
+/* Estilo para las celdas de encabezado (th) */
+#horariosTable th {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
 
-  /* Estilo para las celdas de datos (td) */
-  #horariosTable td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  }
+/* Estilo para las celdas de datos (td) */
+#horariosTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+/* Estilo para filas pares */
+#horariosTable tr:nth-child(even) {
+  background-color: #f2f2f2; /* Color gris */
+}
+
+/* Estilo para filas impares */
+#horariosTable tr:nth-child(odd) {
+  background-color: white; /* Color blanco */
+}
+
+/* Eliminar bordes entre columnas */
+#horariosTable td,
+#horariosTable th {
+  border: none;
+}
+
+  .btn-efecto-hover {
+    transition: transform 0.3s ease; /* Transición suave */
+}
+
+.btn-efecto-hover:hover {
+    transform: scale(1.05); /* Escala al 110% en hover */
+    background-color: #ffc107; /* Cambio de color al hover */
+    
+}
 
   /* Estilo para las tarjetas (cards) */
   .card {
@@ -28,3 +54,61 @@
     padding: 16px;
     margin-bottom: 16px;
   }
+
+
+  /* Estilo para la tabla de turnos */
+#turnosTableMedico {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Estilo para las celdas de encabezado (th) y datos (td) */
+#turnosTableMedico th,
+#turnosTableMedico td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+/* Estilo para las celdas de encabezado (th) */
+#turnosTableMedico th {
+  background-color: #f2f2f2;
+}
+
+/* Estilo para filas pares */
+#turnosTableMedico tr:nth-child(even) {
+  background-color: #f2f2f2; /* Color gris */
+}
+
+/* Estilo para filas impares */
+#turnosTableMedico tr:nth-child(odd) {
+  background-color: white; /* Color blanco */
+}
+
+/* Eliminar bordes entre columnas */
+#turnosTableMedico th,
+#turnosTableMedico td {
+  border: none;
+}
+
+
+
+
+
+/* Estilo para el botón "Finalizar" con efecto de hover y agrandamiento */
+.btn-finalizar {
+  background-color: #4caf50; /* Color verde */
+  color: white;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Transiciones suaves */
+}
+
+.btn-finalizar:hover {
+  transform: scale(1.05); /* Escala al 110% en hover */
+  background-color: #45a049; /* Cambio de color al hover (verde más oscuro) */
+  color: white;
+}
+
+
+
+
