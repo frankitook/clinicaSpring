@@ -69,67 +69,59 @@ public class Controlador {
     return "index";
     }
 
-@GetMapping("/obtenerHorarios")
-@ResponseBody
-public List<String> obtenerHorariosDisponibles(@RequestParam String fecha, @RequestParam String idMedico) throws ParseException {
+    @GetMapping("/obtenerHorarios")
+    @ResponseBody
+    public List<String> obtenerHorariosDisponibles(@RequestParam String fecha, @RequestParam String idMedico) throws ParseException {
     
-    List<String> horariosMostrar = new ArrayList<>();
-
-    String fechaTexto = fecha;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-    java.util.Date utilDate = sdf.parse(fechaTexto);
-    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-
-    String diaa = obtenerDiaSemana(sqlDate);
-
-    Optional<Medico> medico = servicioMedico.buscarPorID(Integer.parseInt(idMedico));
-
-    List<HorarioMedico> horarios = servicioHorario.traeHorariosDeUnMedico(medico.get());
-
-    HorarioMedico h = new HorarioMedico();
-    for(HorarioMedico horario : horarios){
-
-        if(horario.getDia().equals(diaa)){
-
-             h = horario;
-        }
-
-    }
+        List<String> horariosMostrar = new ArrayList<>();
     
-    java.sql.Time horaInicio = h.getHoraInicio();
-    java.sql.Time horaFin = h.getHoraFin();
+        String fechaTexto = fecha;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     
-    horariosMostrar = generarHorarios(horaInicio, horaFin);
-
-    List<Turno> horariosTurnos = servicio.traeTurnosDeUnMedicoEnUnaFecha(medico.get(), sqlDate);
-
-
-    for(int i=0; i<horariosMostrar.size(); i++){
-
-        for(int j=0; j<horariosTurnos.size(); j++){
-
-
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-
-        
-        String horaFormateada = formatter.format(horariosTurnos.get(j).getHoraAtencion());
-
-            if(horariosMostrar.get(i).equals(horaFormateada)){
-
-                horariosMostrar.remove(i);
-
+        java.util.Date utilDate = sdf.parse(fechaTexto);
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+    
+        String diaa = obtenerDiaSemana(sqlDate);
+    
+        Optional<Medico> medico = servicioMedico.buscarPorID(Integer.parseInt(idMedico));
+    
+        List<HorarioMedico> horarios = servicioHorario.traeHorariosDeUnMedico(medico.get());
+    
+        HorarioMedico h = new HorarioMedico();
+        for (HorarioMedico horario : horarios) {
+            if (horario.getDia().equals(diaa)) {
+                h = horario;
+                break;
             }
-
         }
-
-
-    }
-
     
-   
-    return horariosMostrar;
-}
+        java.sql.Time horaInicio = h.getHoraInicio();
+        java.sql.Time horaFin = h.getHoraFin();
+    
+        horariosMostrar = generarHorarios(horaInicio, horaFin);
+    
+        List<Turno> horariosTurnos = servicio.traeTurnosDeUnMedicoEnUnaFecha(medico.get(), sqlDate);
+    
+        List<String> horariosDisponibles = new ArrayList<>(horariosMostrar);
+    
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        for (Turno turno : horariosTurnos) {
+            String horaFormateada = formatter.format(turno.getHoraAtencion());
+            if (turno.getEstado().equals("Pendiente")) {
+                horariosDisponibles.remove(horaFormateada);
+            } else if (turno.getEstado().equals("Cancelado")) {
+                if (!horariosDisponibles.contains(horaFormateada)) {
+                    horariosDisponibles.add(horaFormateada);
+                }
+            }
+        }
+    
+        // Ordenar la lista de horarios disponibles por hora
+        horariosDisponibles.sort(String::compareTo);
+    
+        return horariosDisponibles;
+    }
+    
 
 
 
