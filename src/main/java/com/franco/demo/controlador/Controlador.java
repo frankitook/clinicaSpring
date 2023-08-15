@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -123,6 +125,39 @@ public class Controlador {
     }
     
 
+    @PostMapping("/actualizarHorario")
+    public String guardarNuevoHorario(@RequestParam String dia, @RequestParam String horaInicio, @RequestParam String horaFin,
+                                      @RequestParam String nuevaHoraInicio, @RequestParam String nuevaHoraFin) {
+        // Pseudo-código para actualizar el horario en la base de datos
+       
+        // Convierte las horas a formatos adecuados (por ejemplo, LocalTime en Java 8+)
+        Time horaInicioTime = Time.valueOf(horaInicio);
+        Time horaFinTime = Time.valueOf(horaFin);
+        LocalTime nuevaHoraInicioLocal = LocalTime.parse(nuevaHoraInicio);
+        LocalTime nuevaHoraFinLocal = LocalTime.parse(nuevaHoraFin);
+    
+        // Lógica para obtener y actualizar el horario en la base de datos
+        Optional<HorarioMedico> horario = servicioHorario.traeUnHorariodeUnMedico(usuarioMedico, dia);
+    
+        if (horario.isPresent()) {
+            HorarioMedico h = horario.get();
+            
+            // Actualiza solo si los valores no son nulos
+            if (nuevaHoraInicio != null && nuevaHoraFin != null) {
+                Time nuevaHoraInicioTime = Time.valueOf(nuevaHoraInicioLocal);
+                Time nuevaHoraFinTime = Time.valueOf(nuevaHoraFinLocal);
+                
+                h.setHoraInicio(nuevaHoraInicioTime);
+                h.setHoraFin(nuevaHoraFinTime);
+                
+                servicioHorario.guardarHorarioMedico(h);
+            }
+        }
+    
+        // Redirecciona a la página adecuada
+        return "redirect:/home/inicioMedico"; // Cambia la URL según tu configuración
+    }
+    
 
 
   
@@ -174,23 +209,34 @@ public String finalizarTurno(@PathVariable String id) {
 @GetMapping("/inicioMedico")
 public String inicioMedico(Model model) {
     Map<String, Object> atributos = new HashMap<>();
-    List<Turno> turnos = servicio.traeTurnosDeUnMedico(usuarioMedico);
+
+    // Obtener la fecha de hoy
+    LocalDate fechaHoy = LocalDate.now();
+
+    // Filtrar y obtener los turnos de hoy con estado pendiente
+    List<Turno> turnosHoyPendientesYFinalizados = servicio.traeTurnosDeUnMedico(usuarioMedico).stream()
+    .filter(turno -> turno.getFechaAtencion().toLocalDate().isEqual(fechaHoy))
+    .filter(turno -> turno.getEstado().equals("Pendiente") || turno.getEstado().equals("Finalizado"))
+    .collect(Collectors.toList());
+
+
+    // Obtener horarios
     List<HorarioMedico> horarios = servicioHorario.traeHorariosDeUnMedico(usuarioMedico);
+
     // Ordenar la lista de turnos por fecha y hora ascendente
-    Collections.sort(turnos, 
-        Comparator.comparing(Turno::getFechaAtencion)
-                  .thenComparing(Turno::getHoraAtencion)
+    Collections.sort(turnosHoyPendientesYFinalizados,
+            Comparator.comparing(Turno::getFechaAtencion)
+                    .thenComparing(Turno::getHoraAtencion)
     );
 
-        atributos.put("horarios", ordenarHorariosPorDia(horarios));
-        atributos.put("turnos", turnos);
-        
+    atributos.put("horarios", ordenarHorariosPorDia(horarios));
+    atributos.put("turnos", turnosHoyPendientesYFinalizados);
 
-        model.addAllAttributes(atributos);
+    model.addAllAttributes(atributos);
 
-    
     return "medico";
 }
+
 
 
     @GetMapping("/inicioPaciente")

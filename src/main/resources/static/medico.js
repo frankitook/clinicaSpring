@@ -47,24 +47,25 @@ $(window).scroll(function () {
   checkSection();
 });
 
-
 function mostrarTabla() {
-    document.getElementById('contenedorTabla').style.display = 'block';
-    document.getElementById('contenedorHorarios').style.display = 'none';
-  }
-  
-  function mostrarHorarios() {
-    document.getElementById('contenedorTabla').style.display = 'none';
-    document.getElementById('contenedorHorarios').style.display = 'block';
-  }
+  document.getElementById('contenedorTabla').style.display = 'block';
+  document.getElementById('contenedorHorarios').style.display = 'none';
+}
 
-  
-  
+function mostrarHorarios() {
+  document.getElementById('contenedorTabla').style.display = 'none';
+  document.getElementById('contenedorHorarios').style.display = 'block';
+}
+
+// Evento que se ejecuta cuando se hace clic en el botón "Volver"
+window.addEventListener('popstate', function (event) {
+  mostrarHorarios(); // Cambia a mostrar los horarios cuando se hace clic en "Volver"
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  mostrarTabla();
+});
 
 
-  document.addEventListener("DOMContentLoaded", function() {
-    mostrarTabla();
-  
-  });
 
   

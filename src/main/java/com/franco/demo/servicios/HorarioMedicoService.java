@@ -1,6 +1,7 @@
 package com.franco.demo.servicios;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,16 @@ public class HorarioMedicoService implements IHorarioMedicoService {
     @Override
     public List<HorarioMedico> traeHorariosDeUnMedico(Medico medico) {
         return dao.findByMedico(medico);
+    }
+
+    @Override
+    public Optional<HorarioMedico> traeUnHorariodeUnMedico(Medico medico, String dia) {
+       return dao.findByMedicoAndDia(medico, dia);
+    }
+
+    @Override
+    public void guardarHorarioMedico(HorarioMedico horarioMedico) {
+         dao.save(horarioMedico);
     }
 
     
