@@ -118,7 +118,7 @@ public class Controlador {
             }
         }
     
-        // Ordenar la lista de horarios disponibles por hora
+        
         horariosDisponibles.sort(String::compareTo);
     
         return horariosDisponibles;
@@ -128,9 +128,9 @@ public class Controlador {
     @PostMapping("/actualizarHorario")
     public String guardarNuevoHorario(@RequestParam String dia, @RequestParam String horaInicio, @RequestParam String horaFin,
                                       @RequestParam String nuevaHoraInicio, @RequestParam String nuevaHoraFin) {
-        // Pseudo-código para actualizar el horario en la base de datos
+        
        
-        // Convierte las horas a formatos adecuados (por ejemplo, LocalTime en Java 8+)
+        
         Time horaInicioTime = Time.valueOf(horaInicio);
         Time horaFinTime = Time.valueOf(horaFin);
         LocalTime nuevaHoraInicioLocal = LocalTime.parse(nuevaHoraInicio);
@@ -142,7 +142,7 @@ public class Controlador {
         if (horario.isPresent()) {
             HorarioMedico h = horario.get();
             
-            // Actualiza solo si los valores no son nulos
+           
             if (nuevaHoraInicio != null && nuevaHoraFin != null) {
                 Time nuevaHoraInicioTime = Time.valueOf(nuevaHoraInicioLocal);
                 Time nuevaHoraFinTime = Time.valueOf(nuevaHoraFinLocal);
@@ -154,8 +154,8 @@ public class Controlador {
             }
         }
     
-        // Redirecciona a la página adecuada
-        return "redirect:/home/inicioMedico"; // Cambia la URL según tu configuración
+        
+        return "redirect:/home/inicioMedico"; 
     }
     
 
